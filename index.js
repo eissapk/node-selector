@@ -68,7 +68,7 @@ var manualDrag = {
       box.classList.remove("hidden");
       // update box position
       if (this.walkX < 0) {
-        // reverse
+        // todo bug | reverse
         box.style.left = "auto";
         box.style.right = this.startX + "px";
         box.style.width = this.walkX + "px";
@@ -79,7 +79,7 @@ var manualDrag = {
         box.style.width = this.walkX + "px";
       }
       if (this.walkY < 0) {
-        // reverse
+        // todo bug | reverse
         box.style.top = "auto";
         box.style.bottom = this.startY + "px";
         box.style.height = this.walkY + "px";
@@ -91,51 +91,40 @@ var manualDrag = {
       }
       // console.warn("walk", { walkX: this.walkX, walkY: this.walkY });
 
-      const selectionDimensions = { x: this.startX, width: this.walkX, y: this.startY, height: this.walkY };
-      console.log({ qs: this.currentQuestionsBoxes, s: selectionDimensions });
+      const outerBox = { x: this.startX, width: this.walkX, y: this.startY, height: this.walkY };
+      // console.log({ innerBox: this.currentQuestionsBoxes, outerBox: outerBox });
 
-      // this.currentQuestionsBoxes.forEach(questionBox => {
-      //   // if elem in dom
-      //   if (questionBox.elm) {
-      //     if (this.isSelected(questionBox, selectionDimensions)) {
-      //       const hasSameBox = this.store.find(item => item.id === questionBox.id);
-      //       if (!hasSameBox) this.store.push(questionBox);
-      //     }
-      //   }
-      // });
+      this.currentQuestionsBoxes.forEach(innerBox => {
+        // if elem in dom
+        if (innerBox.elm) {
+          if (this.isSelected(innerBox, outerBox)) {
+            const hasSameBox = this.store.find(item => item.id === innerBox.id);
+            if (!hasSameBox) this.store.push(innerBox);
+          }
+        }
+      });
     }
   },
 
   showAnswer() {
-    // console.log(this.store);
-    // if (this.store && this.store.length) {
-    //   this.store.forEach(item => {
-    //     const placholder = item.elm.querySelector(".answerPlaceholder");
-    //     const answer = item.elm.querySelector(".answer");
-    //     placholder.style.display = "none";
-    //     answer.style.display = "inline-block";
-    //   });
-    // }
+    console.log(this.store);
+    if (this.store && this.store.length) {
+      this.store.forEach(item => {
+        const placholder = item.elm.querySelector(".answerPlaceholder");
+        const answer = item.elm.querySelector(".answer");
+        placholder.style.display = "none";
+        answer.style.display = "inline-block";
+      });
+    }
   },
 
-  // todo detect if the question is wrapped in the selection 
-  isSelected(box1, box2) {
-    var depth = 10;
-    if (box1.y + depth > box2.y + box2.h) {
-      // top > bottom
-      return false;
-    } else if (box1.x + box1.w + depth < box2.x) {
-      // right < left
-      return false;
-    } else if (box1.y + box1.h + depth < box2.y) {
-      // bottom < top
-      return false;
-    } else if (box1.x + depth > box2.x + box2.w) {
-      // left > right
-      return false;
-    } else {
-      // intersection
+  isSelected(innerBox, outerBox) {
+    const xAxis = innerBox.x > outerBox.x && innerBox.x + innerBox.width < outerBox.x + outerBox.width;
+    const yAxis = innerBox.y > outerBox.y && innerBox.y + innerBox.height < outerBox.y + outerBox.height;
+    if (xAxis && yAxis) {
       return true;
+    } else {
+      return false;
     }
   },
 };
