@@ -1,0 +1,40 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+p {
+  margin: 0;
+  display: inline-block;
+}
+#box {
+  width: 0;
+  height: 0;
+  border: 1px dashed blue;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+.hidden {
+  display: none;
+}
+main {
+  padding: 150px 0;
+  .qa {
+    background-color: #eee;
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-width: 300px;
+    margin: 20px auto;
+    user-select: none;
+    .question {
+    }
+    .answerPlaceholder {
+    }
+    .answer {
+      display: none;
+      color: green;
+    }
+  }
+}

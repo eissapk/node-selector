@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+p {
+  margin: 0;
+  display: inline-block;
+}
+
+#box {
+  width: 0;
+  height: 0;
+  border: 1px dashed blue;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
+}
+
+.hidden {
+  display: none;
+}
+
+main {
+  padding: 150px 0;
+}
+
+main .qa {
+  background-color: #eee;
+  border: 1px solid #ccc;
+  padding: 10px;
+  max-width: 300px;
+  margin: 20px auto;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+main .qa .answer {
+  display: none;
+  color: green;
+}
+/*# sourceMappingURL=index.css.map */
